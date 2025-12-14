@@ -1,7 +1,6 @@
 # Import any dependencies needed to execute sql queries
 from employee_events.sql_execution import QueryMixin
 
-
 # Define a class called QueryBase
 # Use inheritance to add methods
 # for querying the employee_events database.
