@@ -25,11 +25,11 @@ class Team(QueryBase):
         # from the team table for all teams
         # in the database
 
-        sql_query = """
+        sql_query = f"""
             SELECT 
                 team_name,
                 team_id
-            FROM team;
+            FROM {self.name};
         """
 
         return self.query(sql_query)
@@ -38,7 +38,7 @@ class Team(QueryBase):
     # that receives an ID argument
     # This method should return
     # a list of tuples from an sql execution
-    def username(self):
+    def username(self, id):
 
         # Query 6
         # Write an SQL query
@@ -50,8 +50,8 @@ class Team(QueryBase):
         sql_query = f"""
                 SELECT 
                     team_name
-                FROM team
-                WHERE team.team_id = {id};
+                FROM {self.name}
+                WHERE {self.name}.{self.name}_id = {id};
         """
 
         return self.query(sql_query)

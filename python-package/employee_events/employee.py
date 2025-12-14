@@ -28,12 +28,11 @@ class Employee(QueryBase):
         # This query should return the data
         # for all employees in the database
         
-        sql_query = """
+        sql_query = f"""
             SELECT 
-                first_name,
-                last_name,
+                CONCAT(first_name, ' ',last_name),
                 employee_id
-            FROM employee;
+            FROM {self.name};
         """
 
         return self.query(sql_query)
@@ -53,10 +52,9 @@ class Employee(QueryBase):
 
         sql_query = f"""
                 SELECT 
-                    first_name,
-                    last_name
-                FROM employee
-                WHERE employee.employee_id = {id};
+                    CONCAT(first_name, ' ',last_name)
+                FROM {self.name}
+                WHERE {self.name}.{self.name}_id = {id};
         """
 
         return self.query(sql_query)

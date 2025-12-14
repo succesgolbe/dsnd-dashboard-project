@@ -7,7 +7,7 @@ from employee_events.employee import Employee
 from employee_events.team import Team
 
 # import the load_model function from the utils.py file
-from report.utils import load_model
+from utils import load_model
 
 """
 Below, we import the parent classes
@@ -50,7 +50,7 @@ class ReportDropdown(Dropdown):
         # that returns the user-type's
         # names and ids
 
-        return model.employee_events()
+        return model.names()
 
 
 # Create a subclass of base_components/BaseComponent
@@ -60,7 +60,7 @@ class Header(BaseComponent):
     # Overwrite the `build_component` method
     # Ensure the method has the same parameters
     # as the parent class
-    def build_component(self, model):
+    def build_component(self, entity_id, model):
         
         # Using the model argument for this method
         # return a fasthtml H1 objects
@@ -151,7 +151,7 @@ class BarChart(MatplotlibViz):
         
         # Index the second column of predict_proba output
         # The shape should be (<number of records>, 1)
-        model_output = model_output[:,1]
+        model_output = model_output[:, 1]
         
         
         # Below, create a `pred` variable set to
@@ -201,7 +201,7 @@ class NotesTable(DataTable):
 
     # Overwrite the `component_data` method
     # using the same parameters as the parent class
-    def component_data(self, model, entity_id):
+    def component_data(self, entity_id, model):
         
         # Using the model and entity_id arguments
         # pass the entity_id to the model's .notes 
@@ -246,8 +246,8 @@ report = Report()
 
 # Create a route for a get request
 # Set the route's path to the root
-@app.get("/")
-def homepage():
+@app.route("/")
+def get():
 
     # Call the initialized report
     # pass the integer 1 and an instance
@@ -262,8 +262,8 @@ def homepage():
 # an ID of `2`. 
 # parameterize the employee ID 
 # to a string datatype
-@app.get("/employee/{id}")
-def employee_page(id:str):
+@app.route("/employee/{id}")
+def get_employee(id:str):
 
     # Call the initialized report
     # pass the ID and an instance
@@ -278,8 +278,8 @@ def employee_page(id:str):
 # an ID of `2`. 
 # parameterize the team ID 
 # to a string datatype
-@app.get("/team/{id}")
-def team_page(id:str):
+@app.route("/team/{id}")
+def get_team(id:str):
 
     # Call the initialized report
     # pass the id and an instance
@@ -310,6 +310,5 @@ async def update_data(r):
     elif profile_type == 'Team':
         return RedirectResponse(f"/team/{id}", status_code=303)
     
-
 
 serve()
