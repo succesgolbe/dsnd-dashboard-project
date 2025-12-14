@@ -4,7 +4,7 @@ from employee_events.sql_execution import QueryMixin
 # Define a class called QueryBase
 # Use inheritance to add methods
 # for querying the employee_events database.
-class QueryBase:
+class QueryBase(QueryMixin):
 
     # Create a class attribute called `name`
     # set the attribute to an empty string
@@ -13,7 +13,7 @@ class QueryBase:
     # Define a `names` method that receives
     # no passed arguments
     def names(self):
-        
+
         # Return an empty list
         return []
 
@@ -32,7 +32,7 @@ class QueryBase:
         # of id columns used for joining
         # order by the event_date column
 
-        query_string = f"""
+        sql_query = f"""
                 SELECT
                     event_date,
                     SUM(positive_events) AS positive_events,
@@ -44,9 +44,7 @@ class QueryBase:
                 ORDER BY event_date;
                 """
 
-        df = QueryMixin.pandas_query(query_string)
-
-        return df 
+        return self.pandas_query(sql_query) 
 
 
     # Define a `notes` method that receives an id argument
@@ -61,7 +59,7 @@ class QueryBase:
         # so the query returns the notes
         # for the table name in the `name` class attribute
 
-        query_string = f"""
+        sql_query = f"""
             SELECT
                 note_date,
                 note
@@ -70,6 +68,5 @@ class QueryBase:
                 WHERE {self.name}.{self.name}_id = {id};
         """
 
-        df = QueryMixin.pandas_query(query_string)
-        return df 
+        return self.pandas_query(sql_query)
 
