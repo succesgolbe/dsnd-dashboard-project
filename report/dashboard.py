@@ -1,8 +1,11 @@
 from fasthtml.common import *
 import matplotlib.pyplot as plt
+from fasthtml import app
 
 # Import QueryBase, Employee, Team from employee_events
-from employee_events import QueryBase, Employee, Team
+from employee_events.query_base import QueryBase
+from employee_events.employee import Employee
+from employee_events.team import Team
 
 # import the load_model function from the utils.py file
 from report.utils import load_model
@@ -30,19 +33,19 @@ class ReportDropdown(Dropdown):
     # ensuring it has the same parameters
     # as the Report parent class's method
 
-    def build_component(self, model):
+    def build_component(self, entity_id, model):
         #  Set the `label` attribute so it is set
         #  to the `name` attribute for the model
         self.label = model.name
         
         # Return the output from the
         # parent class's build_component method
-        return super().build_component(model)
+        return super().build_component(entity_id, model)
     
     # Overwrite the `component_data` method
     # Ensure the method uses the same parameters
     # as the parent class method
-    def component_data(self, model):
+    def component_data(self, entity_id, model):
         # Using the model argument
         # call the employee_events method
         # that returns the user-type's
@@ -85,10 +88,10 @@ class LineChart(MatplotlibViz):
         
         # User the pandas .set_index method to set
         # the date column as the index
-        df.set_index('event_date', inplace = True)
+        df = df.set_index('event_date')
         
         # Sort the index
-        df.sort_index(ascending=True, inplace=True)
+        df = df.sort_index()
         
         # Use the .cumsum method to change the data
         # in the dataframe to cumulative counts
@@ -117,8 +120,8 @@ class LineChart(MatplotlibViz):
         self.set_axis_styling(ax, border_color='black', font_color='black')
         
         # Set title and labels for x and y axis
-        ax.set_title('Cumulative Positive and Negative Counts Over Time')
-        ax.set_xlabel('Day')
+        ax.set_title('Cumulative Events Over Time')
+        ax.set_xlabel('Date')
         ax.set_ylabel('Event Count')
 
         return fig
@@ -149,7 +152,7 @@ class BarChart(MatplotlibViz):
         
         # Index the second column of predict_proba output
         # The shape should be (<number of records>, 1)
-        model_output = model_output[:,]
+        model_output = model_output[:,1]
         
         
         # Below, create a `pred` variable set to
@@ -237,7 +240,7 @@ class Report(CombinedComponent):
     children = [Header(), DashboardFilters(), Visualizations(), NotesTable()]
 
 # Initialize a fasthtml app 
-app = FastHTML()
+app = app()
 
 # Initialize the `Report` class
 report = Report()

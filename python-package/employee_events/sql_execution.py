@@ -1,4 +1,3 @@
-#%%
 from sqlite3 import connect
 from pathlib import Path
 from functools import wraps
@@ -6,7 +5,7 @@ import pandas as pd
 
 # Using pathlib, create a `db_path` variable
 # that points to the absolute path for the `employee_events.db` file
-db_path = Path(__file__).parent / 'employee_events.db'
+db_path = Path(__file__).resolve().parent / 'employee_events.db'
 
 # OPTION 1: MIXIN
 # Define a class called `QueryMixin`
