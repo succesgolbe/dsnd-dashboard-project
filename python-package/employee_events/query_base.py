@@ -21,7 +21,7 @@ class QueryBase:
     # Define an `event_counts` method
     # that receives an `id` argument
     # This method should return a pandas dataframe
-    def event_counts(self, id, connection):
+    def event_counts(self, id):
 
         # QUERY 1
         # Write an SQL query that groups by `event_date`
@@ -44,14 +44,14 @@ class QueryBase:
                 ORDER BY event_date;
                 """
 
-        df = QueryMixin.query(query_string)
+        df = QueryMixin.pandas_query(query_string)
 
         return df 
 
 
     # Define a `notes` method that receives an id argument
     # This function should return a pandas dataframe
-    def notes(self, id, connection):
+    def notes(self, id):
 
         # QUERY 2
         # Write an SQL query that returns `note_date`, and `note`
@@ -70,6 +70,6 @@ class QueryBase:
                 WHERE {self.name}.{self.name}_id = {id};
         """
 
-        df = QueryMixin.query(query_string)
+        df = QueryMixin.pandas_query(query_string)
         return df 
 

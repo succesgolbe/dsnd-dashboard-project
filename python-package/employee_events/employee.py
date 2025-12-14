@@ -5,6 +5,8 @@ from employee_events.query_base import QueryBase
 # from the `sql_execution` module
 from employee_events.sql_execution import QueryMixin
 
+from employee_events import sql_execution
+
 # Define a subclass of QueryBase
 # called Employee
 class Employee(QueryBase):
@@ -18,6 +20,7 @@ class Employee(QueryBase):
     # that receives no arguments
     # This method should return a list of tuples
     # from an sql execution
+    @sql_execution.query
     def names(self):
         
         # Query 3
@@ -35,15 +38,12 @@ class Employee(QueryBase):
                 employee_id
             FROM employee;
         """
-        
-        result = QueryMixin.query(query_string)
-            
-        return result 
 
     # Define a method called `username`
     # that receives an `id` argument
     # This method should return a list of tuples
     # from an sql execution
+    @sql_execution.query
     def username(self, id):
         
         # Query 4
@@ -61,11 +61,6 @@ class Employee(QueryBase):
                 WHERE employee.employee_id = {id};
         """
 
-        result = QueryMixin.query(query_string)
-
-        return result
-
-
     # Below is method with an SQL query
     # This SQL query generates the data needed for
     # the machine learning model.
@@ -73,7 +68,7 @@ class Employee(QueryBase):
     # so when it is called, a pandas dataframe
     # is returns containing the execution of
     # the sql query
-    @QueryMixin.query
+    @QueryMixin.pandas_query
     def model_data(self, id):
 
         return f"""
