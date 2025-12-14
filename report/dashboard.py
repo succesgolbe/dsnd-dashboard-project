@@ -1,6 +1,5 @@
 from fasthtml.common import *
 import matplotlib.pyplot as plt
-from fasthtml import app
 
 # Import QueryBase, Employee, Team from employee_events
 from employee_events.query_base import QueryBase
@@ -240,7 +239,7 @@ class Report(CombinedComponent):
     children = [Header(), DashboardFilters(), Visualizations(), NotesTable()]
 
 # Initialize a fasthtml app 
-app = app()
+app = FastHTML()
 
 # Initialize the `Report` class
 report = Report()
