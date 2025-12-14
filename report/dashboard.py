@@ -227,7 +227,7 @@ class DashboardFilters(FormGroup):
     
 # Create a subclass of CombinedComponents
 # called `Report`
-class Report(CombinedComponents):
+class Report(CombinedComponent):
 
     # Set the `children`
     # class attribute to a list
