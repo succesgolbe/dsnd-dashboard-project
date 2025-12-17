@@ -6,19 +6,21 @@ from employee_events.sql_execution import QueryMixin
 
 # Create a subclass of QueryBase
 # called  `Team`
+
+
 class Team(QueryBase):
 
     # Set the class attribute `name`
     # to the string "team"
     name = "team"
 
-
     # Define a `names` method
     # that receives no arguments
     # This method should return
     # a list of tuples from an sql execution
+
     def names(self):
-        
+
         # Query 5
         # Write an SQL query that selects
         # the team_name and team_id columns
@@ -26,7 +28,7 @@ class Team(QueryBase):
         # in the database
 
         sql_query = f"""
-            SELECT 
+            SELECT
                 team_name,
                 team_id
             FROM {self.name};
@@ -48,7 +50,7 @@ class Team(QueryBase):
         # the ID argument
 
         sql_query = f"""
-                SELECT 
+                SELECT
                     team_name
                 FROM {self.name}
                 WHERE {self.name}.{self.name}_id = {id};
@@ -77,5 +79,5 @@ class Team(QueryBase):
                     GROUP BY employee_id
                    );
             """
-        
+
         return self.pandas_query(sql_query)
